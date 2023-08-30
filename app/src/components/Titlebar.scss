@@ -1,0 +1,62 @@
+.titlebar {
+  background-color: #0f0f0f;
+  color: #f0f0f0;
+  height: 30px;
+  display: flex;
+}
+
+.title {
+  padding: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  flex-grow: 1;
+  -webkit-app-region: drag;
+}
+
+.windowControls {
+  align-items: center;
+  height: 100%;
+  display: flex;
+}
+
+.windowControls .minimise {
+  width: 15px;
+  height: 15px;
+  transition: 0.3s ease-in;
+  margin: 0;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.windowControls .minimise:hover {
+  color: #0f0f0f;
+  background-color: #f0f0f0;
+}
+
+.windowControls .maximise {
+  width: 15px;
+  height: 15px;
+  transition: 0.3s ease-in;
+  margin: 0;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.windowControls .maximise:hover {
+  color: #0f0f0f;
+  background-color: #f0f0f0;
+}
+
+.windowControls .close {
+  width: 15px;
+  height: 15px;
+  transition: 0.3s ease-in;
+  margin: 0;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.windowControls .close:hover {
+  background-color: red;
+}

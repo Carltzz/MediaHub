@@ -1,0 +1,38 @@
+.menu-container {
+  background-color: #f0f0f0;
+  align-items: start;
+  width: 300;
+}
+
+.menu-bar {
+  background-color: #f0f0f0;
+  padding: 0;
+}
+
+.menu-bar .nav-link {
+  border-bottom: black;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  text-align: center;
+}
+
+
+.menu-selected.youtube {
+  color: #ff0000;
+}
+
+.menu-selected.soundcloud {
+  color: #ff5500;
+}
+
+.menu-selected.info {
+  color: lime;
+}
+
+.menu-selected.settings {
+  color: blue;
+}
+
+.logout {
+  color: maroon;
+}
