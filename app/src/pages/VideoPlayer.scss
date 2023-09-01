@@ -1,0 +1,11 @@
+.vid-player-screen {
+  padding: 32px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.vid-player-screen video {
+  height: 100%;
+  width: auto;
+}

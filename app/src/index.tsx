@@ -9,6 +9,9 @@ import AppContainer from './components/AppContainer';
 import MenuBar from './components/MenuBar';
 import { ApplicationProvider } from './ApplicationContext';
 import Home from './pages/Home';
+import VideoPlayer from './pages/VideoPlayer';
+import Preview from './pages/Preview';
+import SearchPage from './pages/SearchPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,11 +23,17 @@ root.render(
       <AppContainer>
         <Titlebar />
         <div className="screen">
-          <MenuBar />
           <HashRouter>
+            <MenuBar />
             <Routes>
-                <Route path="/" element={<Home />}/>
+                <Route path="/home" element={<Home />}/>
                 <Route path="/login" element={<LoginScreen />}/>
+                <Route path='/preview/:platform/:link'
+                       element={<Preview />}/>
+                <Route path='/search/:platform?/:query?'
+                       element={<SearchPage />}/>
+                <Route path="/player/:link" element={<VideoPlayer />}/>
+                <Route path='*' />
             </Routes>
           </HashRouter>
         </div>

@@ -20,7 +20,7 @@ const ApplicationContext = createContext<AppContextType | undefined>(undefined);
 export const ApplicationProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [appState, setAppState] = useState<AppState>({
     menuBarHidden: true,
-    menuSelectedIndex: 1,
+    menuSelectedIndex: 0,
     isMaximised: false
   });
 

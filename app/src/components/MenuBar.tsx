@@ -2,8 +2,9 @@ import { Nav, Navbar } from "react-bootstrap";
 import { useAppContext } from "../ApplicationContext";
 import './MenuBar.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket, faCircleInfo, faWrench } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faCircleInfo, faHome, faSearch, faWrench } from "@fortawesome/free-solid-svg-icons";
 import { faSoundcloud, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { Link } from "react-router-dom";
 
 const MenuBar = () => {
   const { appState } = useAppContext();
@@ -25,31 +26,48 @@ const MenuBar = () => {
         <Navbar.Toggle aria-controls="main-menu-bar"/>
         <Navbar.Collapse id="main-menu-bar">
           <Nav className="flex-column">
-            <Nav.Link>
+            <Nav.Link as={Link} to='/home'>
+              <FontAwesomeIcon
+                icon={faHome}
+                size="2xl"
+                className={`${selectedClass(0)} app-home`}
+              />
+            </Nav.Link>
+            <Nav.Link as={Link} to='/search'>
+              <FontAwesomeIcon
+                icon={faSearch}
+                size="2xl"
+                className={`${selectedClass(1)} app-search`}
+              />
+            </Nav.Link>
+            <Nav.Link as={Link} to='/search/youtube/'>
               <FontAwesomeIcon
                 icon={faYoutube}
                 size="2xl"
-                className={`${selectedClass(0)} youtube`}/>
+                className={`${selectedClass(2)} youtube`}
+              />
             </Nav.Link>
-            <Nav.Link>
+            <Nav.Link as={Link} to='/search/soundcloud/'>
               <FontAwesomeIcon
                 icon={faSoundcloud}
                 size="2xl"
-                className={`${selectedClass(1)} soundcloud`} />
+                className={`${selectedClass(3)} soundcloud`}
+              />
             </Nav.Link>
-            <Nav.Link>
+            <Nav.Link as={Link} to='/settings'>
               <FontAwesomeIcon
                 icon={faWrench}
                 size="2xl"
-                className={`${selectedClass(2)} settings`} />
+                className={`${selectedClass(4)} settings`}
+              />
             </Nav.Link>
-            <Nav.Link>
+            <Nav.Link as={Link} to='/info'>
               <FontAwesomeIcon
                 icon={faCircleInfo}
                 size="2xl"
-                className={`${selectedClass(3)} info`} />
+                className={`${selectedClass(5)} info`} />
             </Nav.Link>
-            <Nav.Link>
+            <Nav.Link as={Link} to='/login'>
               <FontAwesomeIcon
                 icon={faArrowRightFromBracket}
                 size="2xl"

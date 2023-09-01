@@ -1,21 +1,21 @@
 .menu-container {
+  border-radius: 20px;
   background-color: #f0f0f0;
   align-items: start;
   width: 300;
 }
 
-.menu-bar {
-  background-color: #f0f0f0;
-  padding: 0;
+.menu-container {
+  margin: 16px;
 }
 
 .menu-bar .nav-link {
-  border-bottom: black;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
   text-align: center;
 }
 
+.menu-selected.app-home {
+  color: blueviolet;
+}
 
 .menu-selected.youtube {
   color: #ff0000;
@@ -33,6 +33,6 @@
   color: blue;
 }
 
-.logout {
-  color: maroon;
+.menu-selected.app-search {
+  color: turquoise;
 }

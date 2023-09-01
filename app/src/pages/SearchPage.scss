@@ -1,0 +1,30 @@
+.search-screen {
+  padding: 32px;
+  flex-grow: 1;
+}
+
+.search-home {
+  flex-grow: 1;
+  padding: 32px;
+}
+
+.first-search {
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+
+.search-category {
+  transition: transform 0.3s;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.search-category:hover {
+  transform: scale(1.1);
+  z-index: 2;
+}
+
+.last-search {
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}

@@ -8,6 +8,18 @@ const Titlebar = () => {
   const { appState, setAppState } = useAppContext();
 
   useEffect(() => {
+    const ipc = (window as any).api;
+
+    ipc.registerListener('set-minimise-button', (event: any, data: boolean) => {
+      setAppState(prevState => ({
+        ...prevState,
+        isMaximised: !data
+      }));
+    });
+
+    return () => {
+      ipc.unregisterListener('set-minimise-button');
+    }
   }, [setAppState]);
 
   const minimiseWindow = () => {

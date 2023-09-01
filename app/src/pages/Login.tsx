@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import { Button, Col, Form, Row } from 'react-bootstrap';
+import { useEffect } from 'react';
+import { useAppContext } from '../ApplicationContext'
 import './Login.scss';
 
 const titleStyle = {
@@ -6,6 +9,22 @@ const titleStyle = {
 };
 
 const LoginScreen = () => {
+  const { setAppState } = useAppContext();
+
+  useEffect(() => {
+    setAppState(prevState => ({
+      ...prevState,
+      menuBarHidden: true
+    }));
+
+    return () => {
+      setAppState(prevState => ({
+        ...prevState,
+        menuBarHidden: false
+      }));
+    }
+  }, [setAppState]);
+
   return (
     <Row className='loginContainer g-0'>
       <Col sm={7} className='aboutSection'>
@@ -18,12 +37,18 @@ const LoginScreen = () => {
   );
 };
 
-const LoginForm = () => {
+const loadPlaylists = async (user: string) => {
+  const ipc = (window as any).api;
+  const playlists: any[] = await ipc.invokeMessage('load-playlists', user);
+}
 
-  const continueAsGuest = async () => {
-    console.log("Logging in as guest...");
-    await (window as any).api.invokeMessage('login-guest');
-  };
+const LoginForm = () => {
+  const navigate = useNavigate();
+
+  const continueAsGuest = () => {
+    loadPlaylists('guest');
+    navigate('/home');
+  }
 
   return (
     <div className='loginForm'>

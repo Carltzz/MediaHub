@@ -8,10 +8,12 @@ interface SearchBarProps {
   focusHighlight?: boolean;
   style?: React.CSSProperties;
   className?: string;
+  onSubmit?: (query: string) => void;
 };
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>();
 
   const setHighlighting = (value: boolean) => {
     if (props.focusHighlight) {
@@ -25,17 +27,29 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
     <div
       className={classNames}
       style={isInputFocused ? focusStyle : {}}>
-      <Form>
+      <Form className="search-input-container">
         <Form.Group controlId='search'>
           <Form.Control
             type='text'
             placeholder='Enter search here'
             className='search-input'
             onFocus={() => setHighlighting(true)}
-            onBlur={() => setHighlighting(false)} />
+            onBlur={() => setHighlighting(false)}
+            onChange={(e) => setSearchQuery(e.target.value) }
+             />
         </Form.Group>
       </Form>
-      <FontAwesomeIcon icon={ faSearch } size="xl" className="search-icon"/>
+      <FontAwesomeIcon
+        icon={ faSearch }
+        size="xl"
+        className="search-icon"
+        onClick={() => {
+          if (props.onSubmit) {
+            if (searchQuery) {
+              props.onSubmit(searchQuery);
+            }
+          }
+        }}/>
     </div>
   );
 }
