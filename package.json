@@ -15,7 +15,10 @@
     "electronmon": "^2.0.2"
   },
   "dependencies": {
+    "electron": "^26.1.0",
     "ffmpeg-static": "^5.2.0",
-    "ytdl-core": "^4.11.5"
+    "node-html-parser": "^6.1.6",
+    "ytdl-core": "^4.11.5",
+    "ytsr": "^3.8.4"
   }
 }

@@ -32,7 +32,7 @@ root.render(
                        element={<Preview />}/>
                 <Route path='/search/:platform?/:query?'
                        element={<SearchPage />}/>
-                <Route path="/player/:link" element={<VideoPlayer />}/>
+                <Route path="/player/:platform/:id" element={<VideoPlayer />}/>
                 <Route path='*' />
             </Routes>
           </HashRouter>

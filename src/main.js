@@ -2,24 +2,20 @@ const { app, ipcMain, ipcRenderer, BrowserWindow } = require('electron');
 const path = require('path');
 const { startMainApp } = require('./starter');
 const { initPlaylists } = require('./playlists');
-const { downloadYoutube, initDownloader } = require('./api/Downloader');
+const { initTokens } = require('./api/Tokens');
+const { initDownloader } = require('./api/Downloader');
+const { initYoutube } = require('./api/YouTube')
 
-const validChannels = [
-  "get-constants",
-  "login-guest"
-];
-
-var currentWindow;
+let currentWindow;
+let tokens;
 
 app.whenReady().then(() => {
   currentWindow = startMainApp();
 
   initPlaylists();
   initDownloader();
-
-  ipcMain.handle('get-constants', (event, data) => {
-    return validChannels;
-  });
+  initTokens();
+  initYoutube();
 
   ipcMain.on("minimise-window", (event, data) => {
     currentWindow.minimize();

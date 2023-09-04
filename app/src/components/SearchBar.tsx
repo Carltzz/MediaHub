@@ -23,11 +23,19 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
 
   const classNames = "search-bar" + (props.className ? ` ${props.className}` : "");
 
+  const submit = () => {
+    if (props.onSubmit) {
+      if (searchQuery) {
+        props.onSubmit(searchQuery);
+      }
+    }
+  }
+
   return (
     <div
       className={classNames}
       style={isInputFocused ? focusStyle : {}}>
-      <Form className="search-input-container">
+      <Form className="search-input-container" onSubmit={submit}>
         <Form.Group controlId='search'>
           <Form.Control
             type='text'
@@ -43,13 +51,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
         icon={ faSearch }
         size="xl"
         className="search-icon"
-        onClick={() => {
-          if (props.onSubmit) {
-            if (searchQuery) {
-              props.onSubmit(searchQuery);
-            }
-          }
-        }}/>
+        onClick={submit}/>
     </div>
   );
 }

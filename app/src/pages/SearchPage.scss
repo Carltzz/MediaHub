@@ -1,6 +1,22 @@
 .search-screen {
   padding: 32px;
   flex-grow: 1;
+  height: inherit;
+  width: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-results {
+  flex-grow: 1;
+  overflow: auto;
+  height: inherit;
+}
+
+.search-result {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16px;
 }
 
 .search-home {
@@ -27,4 +43,16 @@
 .last-search {
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
+}
+
+.result-thumbnail {
+  width: 355px;
+  height: 200px;
+  background-position: center;
+  background-size: 355px 200px;
+  cursor: pointer;
+}
+
+.result-info {
+  padding-left: 32px;
 }

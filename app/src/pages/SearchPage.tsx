@@ -2,21 +2,31 @@ import { useNavigate, useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import { Col, Row } from "react-bootstrap";
 import { useAppContext } from "../ApplicationContext";
-import { useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import './SearchPage.scss';
+import '../YouTube';
 
-
-const getSearchSuggestions = (platform: string, query: string): string[] => {
+const getSearchResults = async (platform: string, query: string) => {
   const ipc = (window as any).api;
-  return ipc.invokeMessage('get-suggestions', {
-    platform: platform,
+  const results = await ipc.invokeMessage('youtube-search', {
     query: query
   });
+  console.log(results);
+  return results;
+}
+
+const suffixes = [ '', 'K', 'M', 'B' ]
+
+const formatViews = (views: number) => {
+  let index = 0;
+  for(index = 0; views >= 1000 && index < suffixes.length; views /= 1000.0, index++);
+  return views.toFixed(1).replace(/\.0+$/,'') + suffixes[index];
 }
 
 const SearchPage = () => {
   const { platform } = useParams();
   const { setAppState } = useAppContext();
+  const [searchResults, setSearchResults] = useState<any[]>();
 
   useEffect(() => {
     let selectedIndex = 1;
@@ -24,6 +34,7 @@ const SearchPage = () => {
       case 'youtube': selectedIndex = 2; break;
       case 'soundcloud': selectedIndex = 3; break;
     }
+
     setAppState(prevState => ({
       ...prevState,
       menuBarHidden: false,
@@ -35,11 +46,39 @@ const SearchPage = () => {
     return <SearchHome />
   }
 
+  const updateSearchResults = async (query: string) => {
+    if (platform === 'youtube') {
+      getSearchResults(platform, query).then(results => {
+        setSearchResults(results.items);
+      });
+    }
+  }
+
+  const formatSearchResult = (result: any): ReactNode => {
+    if (result.type !== 'video') {
+      return <></>
+    }
+
+    return (
+      <Col>
+        <SearchResult
+          title={result.title}
+          author={result.author.name}
+          thumbnail={result.bestThumbnail.url}
+          views={result.views}
+          id={result.id}/>
+      </Col>
+    )
+  }
+
   return (
     <div className="search-screen">
-      <SearchBar onSubmit={(query) => getSearchSuggestions(platform, query)}/>
+      <SearchBar onSubmit={(query) => updateSearchResults(query)}/>
       <hr />
       <p>Search results: </p>
+      <div className="search-results">
+        {searchResults?.map(result => formatSearchResult(result))}
+      </div>
     </div>
   )
 }
@@ -62,6 +101,37 @@ const SearchHome = () => {
            className='last-search search-category'>
       </Col>
     </Row>
+  )
+}
+
+interface SearchResultProps {
+  thumbnail: string;
+  title: string;
+  author: string;
+  views?: number;
+  id: string;
+}
+
+const SearchResult: React.FC<SearchResultProps> = (props) => {
+  const navigate = useNavigate();
+  const bgStyle = {
+    backgroundImage: `url(${props.thumbnail})`
+  }
+
+  const navigateToVideo = () => {
+    const id = encodeURIComponent(props.id);
+    navigate(`/player/youtube/${id}`);
+  }
+
+  return (
+    <div className='search-result'>
+      <div className='result-thumbnail' style={bgStyle} onClick={() => navigateToVideo()}></div>
+      <div className='result-info'>
+        <div className='result-title'>{props.title}</div>
+        <div className='result-author'>{props.author}</div>
+        <div className='result-views'>{formatViews(props.views as number)}</div>
+      </div>
+    </div>
   )
 }
 
