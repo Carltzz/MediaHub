@@ -10,6 +10,10 @@ body {
   color: #f0f0f0;
 }
 
+body {
+
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -19,4 +23,18 @@ code {
   display: flex;
   height: inherit;
   width: inherit;
+}
+
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #aaaaaa;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
 }
