@@ -1,26 +1,29 @@
-import { useNavigate } from 'react-router-dom'
-import './MediaThumbnail.scss'
-import MediaItem from '../../media/MediaItem';
+// React
+import React, { useNavigate } from "react-router-dom";
 
-export const MediaThumbnail : React.FC<MediaItem> = (props) => {
-  const navigate = useNavigate();
+// Components
+import "./MediaThumbnail.scss";
+import MediaItem from "../../media/MediaItem";
 
-  const openPlayer = () => {
-    const link = encodeURIComponent(props.link);
-    navigate(`/player/${link}`);
-  }
+export const MediaThumbnail = (props: MediaItem) => {
+	const navigate = useNavigate();
 
-  return (
-    <div className='media-thumbnail' onClick={openPlayer}>
-      <div
-        className='media-img'
-        style={{
-          backgroundImage: `url(${props.image})`,
-        }}/>
-      <div className='media-caption'>
-        <p>{props.title}</p>
-        <p>{props.author}</p>
-      </div>
-    </div>
-  );
-}
+	const openPlayer = () => {
+		const link = encodeURIComponent(props.link);
+		navigate(`/player/${link}`);
+	};
+
+	return (
+		<div className='media-thumbnail' onClick={openPlayer}>
+			<div
+				className='media-img'
+				style={{
+					backgroundImage: `url(${props.image})`,
+				}}/>
+			<div className='media-caption'>
+				<p>{props.title}</p>
+				<p>{props.author}</p>
+			</div>
+		</div>
+	);
+};

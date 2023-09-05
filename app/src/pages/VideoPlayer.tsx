@@ -1,60 +1,68 @@
-import { useParams } from 'react-router-dom';
-import './VideoPlayer.scss'
-import { useEffect } from 'react';
+// React
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+// Components
+import "./VideoPlayer.scss";
 
 const resizeYouTubeFrame = (event: any) => {
-  const player = event.target;
-  const container = document.getElementsByClassName('vid-player-screen')[0] as HTMLElement;
-  window.addEventListener('resize', () => {
-    resizePlayer(player, container);
-  })
-  if (!container)
-    return;
-  resizePlayer(player, container);
-}
+	const player = event.target;
+	const allContainers = document.getElementsByClassName("vid-player-screen");
+	const container = allContainers[0] as HTMLElement;
+	if (allContainers.length > 1) {
+		console.warn("Found multiple containers for the YouTube embed.");
+	}
+	if (!container) {
+		console.error("Could not find container for YouTube embed.");
+	}
+	window.addEventListener("resize", () => {
+		resizePlayer(player, container);
+	});
+	resizePlayer(player, container);
+};
 
 function resizePlayer(player: any, container: HTMLElement) {
-  const aspect = 16 / 9;
-  const height = container.offsetHeight - 64;
-  console.log(height);
-  const width = height * aspect;
-  player.setSize(width, height);
+	const aspect = 16 / 9;
+	const height = container.offsetHeight - 64;
+	console.log(height);
+	const width = height * aspect;
+	player.setSize(width, height);
 }
 
 const VideoPlayer = () => {
-  let { id, platform } = useParams();
-  const decodedLink = decodeURIComponent(id ?? "");
+	const { id, platform } = useParams();
+	const decodedLink = decodeURIComponent(id ?? "");
 
-  const createYoutubePlayer = () => {
-    new (window as any).YT.Player('youtube-player', {
-      height: '0',
-      width: '0',
-      videoId: id,
-      events: {
-        onReady: resizeYouTubeFrame
-      }
-    });
-  }
+	const createYoutubePlayer = () => {
+		new (window as any).YT.Player("youtube-player", {
+			height: "0",
+			width: "0",
+			videoId: id,
+			events: {
+				onReady: resizeYouTubeFrame
+			}
+		});
+	};
 
-  let embed = <></>;
+	let embed = <></>;
 
-  if (platform === 'youtube') {
-    embed = (
-      <div id='youtube-player'>hi</div>
-    );
-  } else {
-    embed = <video controls src={decodedLink} />
-  }
+	if (platform === "youtube") {
+		embed = (
+			<div id='youtube-player'>hi</div>
+		);
+	} else {
+		embed = <video controls src={decodedLink} />;
+	}
 
-  useEffect(() => {
-    createYoutubePlayer();
-  })
+	useEffect(() => {
+		createYoutubePlayer();
+	});
 
-  return (
-    <div className="vid-player-screen">
-      {embed}
-    </div>
-  );
-}
+	return (
+		<div className="vid-player-screen">
+			{embed}
+		</div>
+	);
+};
 
 export default VideoPlayer;

@@ -1,16 +1,19 @@
-import { ReactNode } from "react";
-import './AppContainer.scss'
+// React
+import React, { ReactNode } from "react";
+
+// Components
+import "./AppContainer.scss";
 
 interface AppContainerProps {
   children: ReactNode;
 }
 
-const AppContainer: React.FC<AppContainerProps> = ({children}) => {
-  return (
-    <div className="app-container">
-      {children}
-    </div>
-  );
+const AppContainer = (props: AppContainerProps) => {
+	return (
+		<div className="app-container">
+			{props.children}
+		</div>
+	);
 };
 
 export default AppContainer;

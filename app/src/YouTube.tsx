@@ -31,3 +31,11 @@ export interface YouTubeThumbnail {
   width: number;
   height: number;
 }
+
+const suffixes = [ "", "K", "M", "B" ];
+
+export const formatViews = (views: number) => {
+	let index = 0;
+	for(index = 0; views >= 1000 && index < suffixes.length; views /= 1000.0, index++);
+	return views.toFixed(1).replace(/\.0+$/,"") + suffixes[index];
+};

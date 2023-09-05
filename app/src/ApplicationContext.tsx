@@ -1,40 +1,42 @@
-import React, { ReactNode, createContext, useContext, useState } from 'react';
+import React, { ReactNode, createContext, useContext, useState } from "react";
 
 export interface AppState {
   menuBarHidden: boolean;
   menuSelectedIndex: number;
   isMaximised: boolean;
-};
+}
 
 interface AppProviderProps {
   children: ReactNode;
-};
+}
 
 interface AppContextType {
   appState: AppState | undefined;
   setAppState: React.Dispatch<React.SetStateAction<AppState>>;
 }
 
+const defaultAppState: AppState = {
+	menuBarHidden: true,
+	menuSelectedIndex: 0,
+	isMaximised: false
+};
+
 const ApplicationContext = createContext<AppContextType | undefined>(undefined);
 
 export const ApplicationProvider: React.FC<AppProviderProps> = ({ children }) => {
-  const [appState, setAppState] = useState<AppState>({
-    menuBarHidden: true,
-    menuSelectedIndex: 0,
-    isMaximised: false
-  });
+	const [appState, setAppState] = useState(defaultAppState);
 
-  return (
-    <ApplicationContext.Provider value={{ appState, setAppState }}>
-      { children }
-    </ApplicationContext.Provider>
-  )
-}
+	return (
+		<ApplicationContext.Provider value={{ appState, setAppState }}>
+			{ children }
+		</ApplicationContext.Provider>
+	);
+};
 
 export const useAppContext = () => {
-  const context = useContext(ApplicationContext);
-  if (!context) {
-    throw new Error("No ApplicationProvider found");
-  }
-  return context;
-}
+	const context = useContext(ApplicationContext);
+	if (!context) {
+		throw new Error("No ApplicationProvider found");
+	}
+	return context;
+};
