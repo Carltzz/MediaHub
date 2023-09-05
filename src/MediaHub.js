@@ -1,8 +1,7 @@
 const TOKENS = {
-  "youtube": undefined,
-  "soundcloud": undefined
+	"youtube": undefined, "soundcloud": undefined
 };
 
 module.exports = {
-  TOKENS
+	TOKENS
 };
