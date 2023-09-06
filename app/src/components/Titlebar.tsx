@@ -12,25 +12,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Components
 import "./Titlebar.scss";
-import { useAppContext } from "../ApplicationContext";
+import { useDispatch, useSelector } from "react-redux";
+import { setMaximised } from "../redux/Window";
+import { RootStore } from "../redux/store";
 
 const ipc: any = (window as any).api;
 
 const Titlebar = () => {
-	const { appState, setAppState } = useAppContext();
+	const dispatch = useDispatch();
+	const isMaximised = useSelector((state: RootStore) =>
+		state.window.isMaximised
+	);
 
 	useEffect(() => {
 		ipc.registerListener("set-minimise-button", (event: any, data: boolean) => {
-			setAppState(prevState => ({
-				...prevState,
-				isMaximised: !data
-			}));
+			dispatch(setMaximised(!data))
 		});
 
 		return () => {
 			ipc.unregisterListener("set-minimise-button");
 		};
-	}, [setAppState]);
+	});
 
 	const minimiseWindow = () => {
 		ipc.sendMessage("minimise-window");
@@ -53,7 +55,7 @@ const Titlebar = () => {
 					className='minimise'
 					onClick={minimiseWindow} />
 				<FontAwesomeIcon
-					icon={appState?.isMaximised ? faWindowRestore : faWindowMaximize}
+					icon={isMaximised ? faWindowRestore : faWindowMaximize}
 					className='maximise'
 					onClick={maximiseWindow}/>
 				<FontAwesomeIcon

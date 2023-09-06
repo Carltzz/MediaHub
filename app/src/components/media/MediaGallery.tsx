@@ -17,37 +17,46 @@ interface MediaGalleryState {
 
 interface MediaGalleryProps {
 	height: number,
-	items?: MediaItem[]
+	items?: MediaItem[],
+	showAdd?: boolean,
 }
-
 
 const MediaGallery = (props: MediaGalleryProps) => {
 	const [mediaState] = useState<MediaGalleryState>({
 		items: props.items || []
 	});
 
+	const showAddModel = () => {
+
+		return;
+	};
+
+	const addThumbnail = () => {
+		return (
+			<Col xs={12} sm={6} md={4} lg={3} xl={2}
+				onClick={showAddModel}
+				className='empty-gallery'
+				style={{ ...emptyGalleryStyle, flexDirection: "column" }}>
+				<FontAwesomeIcon icon={faAdd} size='2x' style={iconStyle} />
+			</Col>);
+	};
+
 	return (
 		<Row className="media-gallery g-4" style={{ height: props.height }}>
-			{
-				(mediaState.items.length > 0) ?
-					mediaState.items.map((element: MediaItem) => {
-						return (
-							<Col xs={12} sm={6} md={4} lg={3} xl={2} key={element.link}>
-								<MediaThumbnail
-									title={element.title}
-									author={element.author}
-									image={element.image}
-									link={element.link} />
-							</Col>
-						);
-					})
-					:
-					<Col xs={12} sm={6} md={4} lg={3} xl={2}
-						className='empty-gallery'
-						style={{ ...emptyGalleryStyle, flexDirection: "column" }}>
-						<FontAwesomeIcon icon={faAdd} size='2x' style={iconStyle} />
-					</Col>
+			{mediaState.items.length > 0 &&
+				mediaState.items.map((element: MediaItem) => {
+					return (
+						<Col xs={12} sm={6} md={4} lg={3} xl={2} key={element.link}>
+							<MediaThumbnail
+								title={element.title}
+								author={element.author}
+								image={element.image}
+								link={element.link} />
+						</Col>
+					);
+				})
 			}
+			{props.showAdd === true && addThumbnail()}
 		</Row>
 	);
 };

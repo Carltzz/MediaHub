@@ -19,19 +19,26 @@ import {
 
 // Components
 import "./MenuBar.scss";
-import { useAppContext } from "../ApplicationContext";
+import { useSelector } from "react-redux";
+import { RootStore } from "../redux/store";
 
 const MenuBar = () => {
-	const { appState } = useAppContext();
+	const selectedIndex = useSelector((state: RootStore) =>
+		state.menu.selectedIndex
+	);
 
-	if (appState?.menuBarHidden) {
+	const isHidden = useSelector((state: RootStore) =>
+		state.menu.hidden
+	);
+
+	if (isHidden) {
 		return <></>;
 	}
 
 	/* Each navbar item has an index, and it highlights the selected
 		 menu icon if its index matches the current app state. */
 	const selectedClass = (index: number) => {
-		if (appState?.menuSelectedIndex === index) {
+		if (selectedIndex == index) {
 			return "menu-selected";
 		}
 		return "";

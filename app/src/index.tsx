@@ -11,13 +11,14 @@ import "./index.css";
 import Titlebar from "./components/Titlebar";
 import AppContainer from "./components/AppContainer";
 import MenuBar from "./components/MenuBar";
-import { ApplicationProvider } from "./ApplicationContext";
 
 // Pages
 import Home from "./pages/Home";
 import VideoPlayer from "./pages/VideoPlayer";
 import SearchPage from "./pages/SearchPage";
 import LoginScreen from "./pages/Login";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -25,7 +26,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
 	<React.StrictMode>
-		<ApplicationProvider>
+		<Provider store={store}>
 			<AppContainer>
 				<Titlebar />
 				<div className="screen">
@@ -42,6 +43,6 @@ root.render(
 					</HashRouter>
 				</div>
 			</AppContainer>
-		</ApplicationProvider>
+		</Provider>
 	</React.StrictMode>
 );

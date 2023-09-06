@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 // Components
 import "./Login.scss";
-import { useAppContext } from "../ApplicationContext";
+import { useDispatch } from "react-redux";
+import { setMenuHidden } from "../redux/Menu";
 
 const loadPlaylists = async (user: string) => {
 	const ipc = (window as any).api;
@@ -13,21 +14,11 @@ const loadPlaylists = async (user: string) => {
 };
 
 const LoginScreen = () => {
-	const { setAppState } = useAppContext();
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		setAppState(prevState => ({
-			...prevState,
-			menuBarHidden: true
-		}));
-
-		return () => {
-			setAppState(prevState => ({
-				...prevState,
-				menuBarHidden: false
-			}));
-		};
-	}, [setAppState]);
+		dispatch(setMenuHidden(true));
+	}, []);
 
 	return (
 		<Row className='loginContainer g-0'>

@@ -10,8 +10,9 @@ import { Col, Row } from "react-bootstrap";
 // Components
 import "./SearchPage.scss";
 import SearchBar from "../components/SearchBar";
-import { useAppContext } from "../ApplicationContext";
 import { formatViews } from "../YouTube";
+import { useDispatch } from "react-redux";
+import { setMenuSelectedIndex, setMenuHidden } from "../redux/Menu";
 
 interface SearchResultProps {
   thumbnail: string;
@@ -36,8 +37,9 @@ const getSearchResults = async (platform: string, query: string) => {
 
 const SearchPage = () => {
 	const { platform } = useParams();
-	const { setAppState } = useAppContext();
 	const [searchResults, setSearchResults] = useState<any[]>();
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		let selectedIndex = 1;
@@ -46,12 +48,9 @@ const SearchPage = () => {
 		case "soundcloud": selectedIndex = 3; break;
 		}
 
-		setAppState(prevState => ({
-			...prevState,
-			menuBarHidden: false,
-			menuSelectedIndex: selectedIndex
-		}));
-	}, [setAppState, platform]);
+		dispatch(setMenuHidden(false));
+		dispatch(setMenuSelectedIndex(selectedIndex));
+	}, [platform]);
 
 	if (!platform) {
 		return <SearchHome />;
