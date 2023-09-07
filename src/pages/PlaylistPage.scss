@@ -1,0 +1,17 @@
+.playlist-header {
+	display: flex;
+	flex-direction: row;
+}
+
+.playlist-details {
+	padding: 32px;
+	flex-grow: 1;
+	background-color: #090909;
+}
+
+.playlist-thumbnail {
+	width: 240px;
+	height: 240px;
+	background-size: cover;
+	background-position: center;
+}
